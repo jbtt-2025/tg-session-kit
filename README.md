@@ -15,7 +15,7 @@
 - `requirements.txt`：依赖（Telethon 固定版本）。
 
 ## 前置准备：如何获取 API ID / API HASH
-1. 访问 https://my.telegram.org，使用你的 Telegram 账号登录（手机验证码）。
+1. 访问 https://my.telegram.org ，使用你的 Telegram 账号登录（手机验证码）。
 2. 点击 “API development tools”。
 3. 创建应用（名称/描述随意，平台选其他即可）。
 4. 创建后页面会显示 `App api_id` 和 `App api_hash`，后续填入环境变量。
