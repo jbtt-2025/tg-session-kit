@@ -1,6 +1,8 @@
-import asyncio
+﻿import asyncio
 import os
 import re
+from urllib.parse import quote_plus
+from urllib.request import urlopen
 
 from telethon import TelegramClient, events, errors
 from telethon.sessions import StringSession
@@ -10,22 +12,54 @@ API_HASH = os.environ["TG_API_HASH"]
 SESSION = os.environ["TG_SESSION"]
 
 MODE = os.getenv("TG_MODE", "heartbeat")
-INTERVAL_SECONDS = int(os.getenv("TG_INTERVAL_SECONDS", str(14 * 24 * 3600)))
+INTERVAL_SECONDS = int(os.getenv("TG_INTERVAL_SECONDS", str(24 * 3600)))
 JITTER_SECONDS = int(os.getenv("TG_JITTER_SECONDS", "300"))
+
+NOTIFY_BOT_TOKEN = os.getenv("TG_NOTIFY_BOT_TOKEN")
+NOTIFY_CHAT_ID = os.getenv("TG_NOTIFY_CHAT_ID")
 
 CODE_RE = re.compile(r"\b(\d{5,6})\b")
 
 
+def _notify_enabled() -> bool:
+    return bool(NOTIFY_BOT_TOKEN and NOTIFY_CHAT_ID)
+
+
+async def send_notification(status: str, reason: str):
+    if not _notify_enabled():
+        return
+
+    text = f"{NOTIFY_CHAT_ID} 保活{status} {reason}"
+    url = (
+        f"https://api.telegram.org/bot{NOTIFY_BOT_TOKEN}/sendMessage"
+        f"?chat_id={NOTIFY_CHAT_ID}&text={quote_plus(text)}"
+    )
+    try:
+        await asyncio.to_thread(urlopen, url)
+    except Exception:
+        # Best-effort only; do not break heartbeat on notification failure.
+        pass
+
+
 async def heartbeat_loop(client: TelegramClient):
     while True:
+        status = "成功"
+        reason = "ok"
         try:
             await client.start()
             await client.get_me()  # light, read-only heartbeat
+            await send_notification(status, reason)
 
         except errors.FloodWaitError as exc:
+            status = "失败"
+            reason = f"floodwait {int(exc.seconds)}s"
+            await send_notification(status, reason)
             await asyncio.sleep(int(exc.seconds) + 5)
 
-        except Exception:
+        except Exception as exc:
+            status = "失败"
+            reason = f"error: {exc}"
+            await send_notification(status, reason)
             await asyncio.sleep(60)
 
         finally:
