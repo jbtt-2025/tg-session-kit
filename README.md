@@ -78,6 +78,8 @@ docker run -d --name tg-heartbeat \
   -e TG_MODE=heartbeat \
   -e TG_INTERVAL_SECONDS=86400 \
   -e TG_JITTER_SECONDS=300 \
+  -e TG_NOTIFY_BOT_TOKEN="" \
+  -e TG_NOTIFY_CHAT_ID="" \
   ghcr.io/jbtt-2025/tg-session-kit:latest
 
 ```
@@ -96,6 +98,8 @@ docker run -d --name tg-heartbeat `
   --env TG_MODE=heartbeat `
   --env TG_INTERVAL_SECONDS=86400 `
   --env TG_JITTER_SECONDS=300 `
+  --env TG_NOTIFY_BOT_TOKEN="" `
+  --env TG_NOTIFY_CHAT_ID="" `
   ghcr.io/jbtt-2025/tg-session-kit:latest
 
 ```
@@ -264,3 +268,4 @@ docker run --rm `
 - 想更像 cron，可用 `--rm` 配合 systemd timer/cron 定期以 `TG_MODE=heartbeat` 运行一次即退出。
 
 - Telethon 版本已固定，升级前确认 Telegram 协议/登录流程兼容。
+
