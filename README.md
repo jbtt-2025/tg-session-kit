@@ -71,21 +71,13 @@ python scripts/login_local.py
 ```bash
 
 docker run -d --name tg-heartbeat \
-
   --restart unless-stopped \
-
   -e TG_API_ID=123456 \
-
   -e TG_API_HASH="..." \
-
   -e TG_SESSION="..." \
-
   -e TG_MODE=heartbeat \
-
   -e TG_INTERVAL_SECONDS=86400 \
-
   -e TG_JITTER_SECONDS=300 \
-
   ghcr.io/jbtt-2025/tg-session-kit:latest
 
 ```
@@ -97,21 +89,13 @@ docker run -d --name tg-heartbeat \
 ```powershell
 
 docker run -d --name tg-heartbeat `
-
   --restart unless-stopped `
-
   --env TG_API_ID=123456 `
-
   --env TG_API_HASH="..." `
-
   --env TG_SESSION="..." `
-
   --env TG_MODE=heartbeat `
-
   --env TG_INTERVAL_SECONDS=86400 `
-
   --env TG_JITTER_SECONDS=300 `
-
   ghcr.io/jbtt-2025/tg-session-kit:latest
 
 ```
@@ -178,9 +162,7 @@ docker run -d --name tg-heartbeat `
 ```bash
 
 export TG_API_ID=123456
-
 export TG_API_HASH="..."
-
 export TG_SESSION="..."
 
 python scripts/pull_code_once.py
@@ -192,11 +174,8 @@ python scripts/pull_code_once.py
 **PowerShell：**
 
 ```powershell
-
 $env:TG_API_ID="123456"
-
 $env:TG_API_HASH="..."
-
 $env:TG_SESSION="..."
 
 python scripts/pull_code_once.py
@@ -226,15 +205,10 @@ python scripts/listen_code.py
 # 拉取最新验证码（一次性）
 
 docker run --rm \
-
   -e TG_API_ID=123456 \
-
   -e TG_API_HASH="..." \
-
   -e TG_SESSION="..." \
-
   -e TG_MODE=pull_code_once \
-
   ghcr.io/jbtt-2025/tg-session-kit:latest
 
 
@@ -242,15 +216,10 @@ docker run --rm \
 # 监听下一条验证码
 
 docker run --rm \
-
   -e TG_API_ID=123456 \
-
   -e TG_API_HASH="..." \
-
   -e TG_SESSION="..." \
-
   -e TG_MODE=listen_code \
-
   ghcr.io/jbtt-2025/tg-session-kit:latest
 
 ```
@@ -264,15 +233,10 @@ docker run --rm \
 # 拉取最新验证码（一次性）
 
 docker run --rm `
-
   --env TG_API_ID=123456 `
-
   --env TG_API_HASH="..." `
-
   --env TG_SESSION="..." `
-
   --env TG_MODE=pull_code_once `
-
   ghcr.io/jbtt-2025/tg-session-kit:latest
 
 
@@ -280,18 +244,14 @@ docker run --rm `
 # 监听下一条验证码
 
 docker run --rm `
-
   --env TG_API_ID=123456 `
-
   --env TG_API_HASH="..." `
-
   --env TG_SESSION="..." `
-
   --env TG_MODE=listen_code `
-
   ghcr.io/jbtt-2025/tg-session-kit:latest
 
 ```
+
 
 
 
