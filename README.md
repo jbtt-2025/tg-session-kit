@@ -40,6 +40,16 @@
 
 4. 创建后页面会显示 `App api_id` 和 `App api_hash`，后续填入环境变量。
 
+5. 记得开启自动同步时间
+```bash
+#（Ubuntu/Debian）
+sudo apt-get update \
+  && sudo apt-get install -y systemd-timesyncd \
+  && sudo systemctl enable --now systemd-timesyncd \
+  && sudo timedatectl set-ntp true \
+  && timedatectl status
+``` 
+
 
 
 ## 快速开始（用预构建镜像）
@@ -268,4 +278,5 @@ docker run --rm `
 - 想更像 cron，可用 `--rm` 配合 systemd timer/cron 定期以 `TG_MODE=heartbeat` 运行一次即退出。
 
 - Telethon 版本已固定，升级前确认 Telegram 协议/登录流程兼容。
+
 
